@@ -76,6 +76,13 @@ svg text{font-family:var(--f-body)}
 .pill.tight{background:var(--tight-bg);color:var(--tight)} .pill.high{background:var(--high-bg);color:var(--high)} .pill.ok{background:var(--ok-bg);color:var(--ok)}
 .note{color:var(--muted);font-size:.78rem;margin:0}
 @media (prefers-reduced-motion:no-preference){rect.bar{transition:y .25s,height .25s}}
+.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.hist{border-collapse:collapse;width:100%;min-width:480px;font-size:.85rem}
+.hist th,.hist td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+.hist th:first-child,.hist td:first-child{text-align:left}
+.hist th{color:var(--muted);font-weight:500;font-size:.75rem}
+.hist td{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+.hist td.key{font-weight:600}
 </style>
 </head>
 <body>
@@ -85,7 +92,7 @@ svg text{font-family:var(--f-body)}
     <h1>替代役人力模擬器</h1>
     <p class="sub">調整 278–280 梯人數，看 2026/11–2027/2 每月每日平均排班。10 月實際為 5.0 人。</p>
   </header>
-
+  
   <section class="card" aria-labelledby="h-input">
     <h2 id="h-input">梯次與人數</h2>
     <div class="presets" id="presets"></div>
@@ -109,12 +116,31 @@ svg text{font-family:var(--f-body)}
     <div class="legend" id="legend"></div>
     <div class="legend" id="reflegend"></div>
   </section>
-
+    <section class="card" aria-labelledby="h-hist">
+    <h2 id="h-hist">115 年 6–10 月歷史實際排班參考</h2>
+    <div class="tscroll">
+      <table class="hist">
+        <thead>
+          <tr><th>月份</th><th>在籍（平均每天）</th><th>每日平均排班</th><th>平日</th><th>假日</th><th>夜班</th><th>單日最少–最多</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>6 月</td><td>7.5</td><td class="key">4.9</td><td>5.2</td><td>4.1</td><td>1.9</td><td>3–9</td></tr>
+          <tr><td>7 月</td><td>8.0</td><td class="key">5.8</td><td>6.2</td><td>4.8</td><td>2.5</td><td>4–8</td></tr>
+          <tr><td>8 月</td><td>8.1</td><td class="key">5.3</td><td>5.8</td><td>4.3</td><td>2.2</td><td>3–8</td></tr>
+          <tr><td>9 月</td><td>9.0</td><td class="key">4.8</td><td>5.2</td><td>4.0</td><td>2.2</td><td>4–6</td></tr>
+          <tr><td>10 月</td><td>10.0</td><td class="key">5.0</td><td>5.5</td><td>4.1</td><td>2.2</td><td>4–10</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">單位：人。空格、夜、訓算有排班；假、榮、補、病、公、退不算。單日 8–10 人的高峰多為新兵報到週的「訓」。</p>
+  </section>
+  
   <section class="card" aria-labelledby="h-month">
     <h2 id="h-month">逐月明細</h2>
     <div class="months" id="months"></div>
     <p class="note">每人每月排班 = 在單位天數 − 當月假日天數（報到當月只算報到日之後的假日）；報到當週平日排「訓」。退伍前最後一個月多休 11 天，天數不夠時往前一個月扣。假日含週末、12/25、1/1、2/4–2/10。</p>
   </section>
+  
 </div>
 
 <script>
